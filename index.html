@@ -3,14 +3,27 @@
   <head>
     <meta charset="utf-8">
     <title>Draw Doodle</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
-    <h1>Draw Doodle!</h1>
-    <canvas id="canvas" width="300" height="300"></canvas>
-    <h2>I think I saw:</h2>
-    <button type="button" name="button">Clear</button>
-    <button type="button" name="button">Guess</button>
+    <div id="title-header">
+      <h1>Draw Doodles!</h1>
+      <h4>In the left canvas you can draw any doodle you could think of and on
+          the right side you can see if the neural network is able to identify
+          the doodle you have drawn</h4>
+    </div>
+    <div id="main-container">
+      <canvas id="doodle-canvas" width="280" height="280" style="border:1px solid #000000;"></canvas>
+      <div id="result-container">
+        <h2>I think I saw:</h2>
+        <p id="prediction"></p>
+        <button id="clear" type="button" class="red" name="button">Clear the canvas</button>
+        <button id="next" type="button" class="green" name="button">Guess</button>
+        <div id="predictions"></div>
+      </div>
+    </div>
   </body>
   <script src='draw.js' type="text/javascript"></script>
 </html>
