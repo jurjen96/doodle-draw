@@ -12,11 +12,11 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-REBUILD_DATA = True
+REBUILD_DATA = False
 
 LABELS = {
     'car': 0,
-    'chair': 1,
+    'sailboat': 1,
     'bird': 2,
     'broom': 3,
     'butterfly': 4,
@@ -27,7 +27,8 @@ LABELS = {
     'airplane': 9,
     'house': 10,
     'violin': 11,
-    'sock': 12
+    'sock': 12,
+    'saw': 13
 }
 
 def create_training_data():
@@ -37,15 +38,15 @@ def create_training_data():
 
     print("Loading the dataset")
     for label in tqdm(LABELS):
-        dataset.append([np.load('resources/numpy_bitmap/' + label + '.npy'), label])
+        dataset.append([np.load('data/numpy_bitmap/' + label + '.npy'), label])
 
     print("Appending it to the labels and features")
     for doodle in tqdm(dataset):
-        for img in doodle[0][:50000]:
+        for img in doodle[0][:60000]:
             features.append(img)
             labels.append(np.eye(len(LABELS))[LABELS[doodle[1]]])
     # np.random.shuffle(training_data)
-    print("")
+    print("Saving the features and labels")
     np.save('object_features', np.array(features))
     np.save('object_labels', np.array(labels))
     return features, labels
@@ -58,8 +59,6 @@ else:
 
 data = np.array(data)
 
-
-
 # Normalize the data
 data = data / 255
 
@@ -71,14 +70,9 @@ X_test = X_test.reshape(-1, 28, 28, 1)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
-print(y_train[0])
-plt.imshow(X=X_train[0].reshape((28,28)))
-plt.show()
-
-
-print(y_train[1])
-plt.imshow(X=X_train[1].reshape((28,28)))
-plt.show()
+# print(y_train[0])
+# plt.imshow(X=X_train[0].reshape((28,28)))
+# plt.show()
 
 # To save some memory:
 del data
@@ -86,15 +80,20 @@ del labels
 
 model = Sequential()
 
-model.add(Conv2D(64, (3, 3), input_shape=(28, 28, 1)))
+model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
+model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
+# model.add(Conv2D(16, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
-model.add(Conv2D(64, (3, 3)))
+model.add(Conv2D(32, (3, 3), padding='same'))
+model.add(Conv2D(32, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.3))
-model.add(Conv2D(128, (3, 3)))
+model.add(Conv2D(64, (3, 3), padding='same'))
+model.add(Conv2D(64, (3, 3), padding='same'))
+# model.add(Conv2D(128, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.4))
@@ -116,8 +115,8 @@ history = model.fit(X_train, y_train,
 test_loss, test_acc = model.evaluate(X_test, y_test, batch_size=256)
 
 print("SCORE:")
-print("Test loss: ", test_loss)
-print("Test accuracy", test_acc)
+print("Test loss:", test_loss)
+print("Test accuracy:", test_acc)
 
 
 print("Saving model...")
@@ -141,10 +140,6 @@ plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
 
-# 50 epochs
-# Test loss:  0.227007402865481
-# Test accuracy 0.9346247315406799
-
-# 100 epochs
-# Test loss:  0.22372005734438108
-# Test accuracy 0.9357156157493591
+# 256 #cnn_object_model_100_epoch_256_batch_1574278225
+# Test loss: 0.22275635367047047
+# Test accuracy: 0.9370995759963989

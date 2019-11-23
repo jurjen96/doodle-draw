@@ -1,9 +1,21 @@
+html {
+  height: 100%;
+}
+
 body {
+  min-height: 100%;
   margin: 0px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  font-family: 'Short Stack', cursive;
+  background-color: #ffd139;
+  text-align: center;
+}
+
+div {
+  font-weight: bold;
 }
 
 #title-header {
@@ -11,6 +23,7 @@ body {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  width: 80%;
 }
 
 #main-container {
@@ -18,21 +31,62 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
+  margin-top: 8%;
 }
 
+#doodle-canvas {
+  border: 1px solid #000000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#result-container {
+  width: 40%;
+  border-radius: 16px;
+  background-color: #c5c5c5;
+  border: 1px solid #000000;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#certainty-text {
+  margin-top: 15px;
+}
+
+#prediction {
+  margin-top: 15px;
+  font-size: 30px;
+}
+
+#advanced {
+  margin-bottom: 15px;
+}
+
+#advanced .header {
+  padding: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#advanced .content {
+  display: none;
+  padding: 5px;
+}
+
+#advanced div {
+  width: 100%;
+  font-weight: normal;
+}
 
 button {
   color: red;
   font-size: 24px;
   border-radius: 12px;
   padding: 15px 32px;
-  border: 0px;
+  margin: 15px;
   /* text-decoration: none; */
   /* box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); */
   border: 1px solid rgba(0,0,0,0.21);
-    border-bottom-color: rgba(0,0,0,0.34);
-    text-shadow:0 1px 0 rgba(0,0,0,0.15);
+  border-bottom-color: rgba(0,0,0,0.34);
+  text-shadow:0 1px 0 rgba(0,0,0,0.15);
 }
 
 button:active {

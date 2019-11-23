@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Draw Doodle</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Short+Stack&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
@@ -15,13 +16,18 @@
           the doodle you have drawn</h4>
     </div>
     <div id="main-container">
-      <canvas id="doodle-canvas" width="280" height="280" style="border:1px solid #000000;"></canvas>
+      <canvas id="doodle-canvas" width="280" height="280"></canvas>
       <div id="result-container">
-        <h2>I think I saw:</h2>
-        <p id="prediction"></p>
+        <div id="certainty-text">I think I see a(n):</div>
+        <div id="prediction"></div>
+
         <button id="clear" type="button" class="red" name="button">Clear the canvas</button>
-        <button id="next" type="button" class="green" name="button">Guess</button>
-        <div id="predictions"></div>
+
+        <div id="advanced">
+          <div class="header">Advanced</div>
+          <div class="content">
+          </div>
+        </div>
       </div>
     </div>
   </body>
