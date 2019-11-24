@@ -46,9 +46,9 @@ there are. Way more than I originally expected.
 
 Results after training network described above trained on 14 different doodles:
 
-![alt text](./Accuracy.png "Model Accuracy")
+![alt text](./img/Accuracy.png "Model Accuracy")
 
-![alt text](./Loss.png "Model Loss")
+![alt text](./img/Loss.png "Model Loss")
 
 With the test set we get the following accuracy and loss:
 - Test loss: 0.17765145952051337
