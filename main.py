@@ -4,32 +4,16 @@ import keras
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dense, Flatten, Dropout, Activation
-from keras.optimizers import SGD
-from keras.utils import np_utils
 
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
-REBUILD_DATA = False
+REBUILD_DATA = True
 
-LABELS = {
-    'car': 0,
-    'sailboat': 1,
-    'bird': 2,
-    'broom': 3,
-    'butterfly': 4,
-    'candle': 5,
-    'clock': 6,
-    'flashlight': 7,
-    'flower': 8,
-    'airplane': 9,
-    'house': 10,
-    'violin': 11,
-    'sock': 12,
-    'saw': 13
-}
+LABELS = ['car', 'sailboat', 'bird', 'broom', 'butterfly', 'candle', 'clock',
+          'flashlight', 'flower', 'airplane', 'house', 'violin', 'sock', 'saw']
 
 def create_training_data():
     features = []
@@ -44,8 +28,8 @@ def create_training_data():
     for doodle in tqdm(dataset):
         for img in doodle[0][:60000]:
             features.append(img)
-            labels.append(np.eye(len(LABELS))[LABELS[doodle[1]]])
-    # np.random.shuffle(training_data)
+            labels.append(np.eye(len(LABELS))[LABELS.index(doodle[1])])
+
     print("Saving the features and labels")
     np.save('object_features', np.array(features))
     np.save('object_labels', np.array(labels))
@@ -70,6 +54,8 @@ X_test = X_test.reshape(-1, 28, 28, 1)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
+
+# Display the first image of the training set
 # print(y_train[0])
 # plt.imshow(X=X_train[0].reshape((28,28)))
 # plt.show()
@@ -82,7 +68,6 @@ model = Sequential()
 
 model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
 model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
-# model.add(Conv2D(16, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
@@ -93,7 +78,6 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.3))
 model.add(Conv2D(64, (3, 3), padding='same'))
 model.add(Conv2D(64, (3, 3), padding='same'))
-# model.add(Conv2D(128, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.4))
@@ -120,7 +104,7 @@ print("Test accuracy:", test_acc)
 
 
 print("Saving model...")
-model.save('cnn_object_model_100_epoch_256_batch_' + str(time.time()) + '.h5')
+model.save('cnn_object_model_' + str(time.time()) + '.h5')
 
 # Plot training & validation accuracy values
 plt.plot(history.history['accuracy'])
@@ -128,7 +112,7 @@ plt.plot(history.history['val_accuracy'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
+plt.legend(['Train', 'Test'], loc='lower right')
 plt.show()
 
 # Plot training & validation loss values
@@ -137,9 +121,5 @@ plt.plot(history.history['val_loss'])
 plt.title('Model loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
+plt.legend(['Train', 'Test'], loc='upper right')
 plt.show()
-
-# 256 #cnn_object_model_100_epoch_256_batch_1574278225
-# Test loss: 0.22275635367047047
-# Test accuracy: 0.9370995759963989
