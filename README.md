@@ -67,49 +67,46 @@ With the test set:
 ## Setup local development
 
 ### Python
-1. Create a folder in the root of this project called `data`
+1. Create a folder in the root of this project called `data`:
 ```
 $ git clone https://github.com/jurjen96/doodle-draw
-$ cd doodle-draw # Go to root of folder
+$ cd doodle-draw # Go to root of the project
 $ mkdir data # Create a folder called data
 ```
-2. Get the .npy dataset from the bucket
+2. Get the .npy dataset from the Google bucket:
 ```
 $ cd data
 $ gsutil -m cp gs://quickdraw_dataset/full/numpy_bitmap/*.npy . # Get's everything
 $ gsutil -m cp gs://quickdraw_dataset/full/numpy_bitmap/airplane.npy . # Only get's the airplane dataset
 ```
-3. Optional, but recommended, create a virtual environment
+3. Optional, but recommended, create a virtual environment:
 ```
 $ cd ..
 $ pip3 install virtualenv # If you have not yet installed virtualenv
 $ virtualenv venv
 $ source venv/bin/activate
 ```
-4. Install all the dependencies. Note that I trained everything of the
-GPU. Some packages require you to have CUDA installed (e.g.
-tensorflow-gpu). I have not tried to run the python code from my CPU
-(would be really slow). But if you are able to run the code from a CPU,
-please leave a pull request with the required dependencies.
+4. Install all the dependencies. Note that everything was trained of the GPU.
+Some packages require you to have CUDA installed (e.g. tensorflow-gpu).
 ```
 $ pip3 install -r requirements.txt
 ```
-5. Run the code
+5. Run the code:
 ```
 $ python3 main.py
 ```
 6. When the variable `REBUILD_DATA` is set to True, it gets the raw .npy
 files and creates new training data by getting all the features and
-labels and storing them in the object_features.npy and object_label.py
+labels and storing them in the `object_features.npy` and `object_label.npy`
 files. You only have to do this action once, so the second time you want
-to train the model, you could set the REBUILD_DATA to False and it will use
+to train the model, you could set the `REBUILD_DATA` to False and it will use
 the two files described above to save you some time. After the training
 is completed, the model is saved under a `*.h5` extension.
 
 7. If you want to test out the trained model in a web environment, you
 have to convert the `.h5` file to a `.json` and a `.bin` file so that it
 can be imported into tensorflowjs. Change the `NAME_OF_TRAINED_MODEL` to
-the name of the `.h5` file created in step 6.
+the name of the `.h5` file created in step 6:
 ```
 $ tensorflowjs_converter --input_format=keras NAME_OF_TRAINED_MODEL.h5 ./object_model
 ```
@@ -128,5 +125,8 @@ of this project and you are done. The web project is now hosted on:
 ```
 http://127.0.0.1:8887/
 ```
-3. Everytime you change the `index.html` or `draw.js`, you only have to refresh
+3. Every time you change the `index.html` or `draw.js`, you only have to refresh
 the page to apply your new changes.
+
+Please note that the webpage was developed to be functional, not to deliver the
+best UI experience possible ;-)

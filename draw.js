@@ -2,8 +2,9 @@ const labels = [
   'car', 'sailboat', 'bird', 'broom', 'butterfly', 'candle', 'clock',
   'flashlight', 'flower', 'airplane', 'house', 'violin', 'sock', 'saw' ]
 
-const ranges = [0, 0.6, 0.9]
-const certainty_text = ["I'm not sure, but is it a(n):", "It looks like a(n):", "I see a(n):"]
+const ranges = [0, 0.6, 0.9] // Depending on certainty replace the text how certain it is
+const certainty_text = ["I'm not sure, but is it $A_AN:", "It looks like $A_AN:", "I see $A_AN:"]
+const vowels = ['a', 'e', 'i', 'o', 'u'] // Used to check how we should replace $A_AN in certainty_text above
 
 var canvas = document.getElementById('doodle-canvas')
 var context = canvas.getContext('2d')
@@ -71,7 +72,13 @@ predict = async () => {
   // Set the text how certain the network is that it is able to recognize a certain doodle
   for (range of ranges.slice().reverse()) {
     if (predictions[predicted] > range) {
-      $('#certainty-text').html(certainty_text[ranges.indexOf(range)])
+      let text = certainty_text[ranges.indexOf(range)]
+      // Replace the $A_AN depending if the recognized object word start with an vowel
+      if (vowels.includes(labels[predicted][0]))
+        text = text.replace('$A_AN', 'an')
+      else
+        text = text.replace('$A_AN', 'a')
+      $('#certainty-text').html(text)
       break
     }
   }
@@ -88,7 +95,7 @@ predict = async () => {
 reset = () => {
   // Resets everything to default value -> prediction is set to void
   context.fillRect(0, 0, canvas.width, canvas.height)
-  $('#certainty-text').html('I think I saw a(n):')
+  $('#certainty-text').html('I think I saw a:')
   $('#prediction').html('Void')
 
   $('#advanced .content').empty()
