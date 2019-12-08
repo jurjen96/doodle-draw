@@ -22,7 +22,7 @@ def create_training_data():
 
     print("Loading the dataset")
     for label in tqdm(LABELS):
-        dataset.append([np.load('data/numpy_bitmap/' + label + '.npy'), label])
+        dataset.append([np.load('data/' + label + '.npy'), label])
 
     print("Appending it to the labels and features")
     for doodle in tqdm(dataset):
@@ -67,7 +67,7 @@ del labels
 model = Sequential()
 
 model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
-model.add(Conv2D(16, (3, 3), padding='same', input_shape=(28, 28, 1)))
+model.add(Conv2D(16, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))

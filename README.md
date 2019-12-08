@@ -73,7 +73,8 @@ $ git clone https://github.com/jurjen96/doodle-draw
 $ cd doodle-draw # Go to root of the project
 $ mkdir data # Create a folder called data
 ```
-2. Get the .npy dataset from the Google bucket:
+2. Get the .npy dataset from the Google bucket (First install google cloud sdk
+[here](https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu "Google Cloud SDK")):
 ```
 $ cd data
 $ gsutil -m cp gs://quickdraw_dataset/full/numpy_bitmap/*.npy . # Get's everything
